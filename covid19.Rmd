@@ -1,12 +1,27 @@
-------------------------------------------------------------------------
+---
+title: "Sample code for processing COVID-19 data"
+date:  "Last updated: `r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
 
-> Note that the plots were last updated on March 17, 2020. They may be
-> outdated by the time you read this.
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
 
-Data prep
----------
+```{r eval = FALSE, echo = FALSE}
+# To create a GitHub ready markdown document -----
+rmarkdown::render("covid19.Rmd", output_file = "README.md", rmarkdown::md_document(variant = "markdown_github"))
+```
 
-``` r
+-----
+
+> Note that the plots were last updated on `r format(Sys.time(), '%B %d, %Y')`. They may be outdated by the time you read this.
+
+
+## Data prep
+
+```{r}
+
 library(readr)
 library(dplyr)
 library(tidyr)
@@ -45,7 +60,9 @@ dat$continent <- countrycode(dat$country, 'country.name', 'continent')
 dat$iso <- countrycode(dat$country, 'country.name', 'iso3c')
 ```
 
-``` r
+
+
+```{r fig.height = 6, fig.width = 11}
 # Dot plot faceted by continent (limit to three continents for sake of fig size)
 # (also: bumping count by small amount to apply log transformation)
 dat %>% filter(Date == max(Date),
@@ -64,14 +81,13 @@ dat %>% filter(Date == max(Date),
   xlab("count") +
   ylab(NULL)+
   geom_vline(xintercept = 1000, col = "grey")
+  
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
-Choropleth map of counts
-------------------------
+## Choropleth map of counts
 
-``` r
+```{r fig.width = 8, fig.height = 9}
 library(sf)
 library(rnaturalearth)
 
@@ -100,12 +116,9 @@ ggplot(world2) + geom_sf(aes(fill = cnt)) +
     facet_wrap(~ label, ncol = 1)
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-4-1.png)
+## Choropleth map of recovery rates
 
-Choropleth map of recovery rates
---------------------------------
-
-``` r
+```{r fig.width = 8, fig.height = 5}
 dat3 <- dat2 %>% 
   filter(label %in% c("confirmed", "recovered")) %>% 
   pivot_wider(names_from = label, values_from = cnt) %>% 
@@ -125,4 +138,3 @@ ggplot(world3) + geom_sf(aes(fill = rate)) +
                               barheight = unit(2.5, "in"))) 
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-5-1.png)
