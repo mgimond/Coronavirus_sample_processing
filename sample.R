@@ -29,6 +29,12 @@ dat %>% group_by(Date, label) %>% summarise(count = sum(Counts)) %>%
   ggplot() + aes(x=Date, y=count, col = label) + geom_line() + geom_point() +
   coord_trans(y = "log")
 
+# barplot
+
+dat %>% filter(Date == max(Date)) %>% 
+   group_by(label, `Country/Region`) %>% summarise(count = sum(Counts)) %>%
+  ggplot() + aes(y=reorder(`Country/Region`, count, max), x = (count + 0.1), col = label) + geom_point() +
+  coord_trans(x = "log") 
 
 #### Map
 
@@ -51,10 +57,10 @@ world2 <- world %>%
 
 ggplot(world2) + geom_sf(aes(fill = cnt)) +
   scale_fill_binned(#low="#FFFFCC", high="#800026", 
-                     gradient = RColorBrewer::brewer.pal(6, "Reds"),
-                     breaks = c(1000, 2000, 3000, 5000, 10000, 50000, 100000),
-                     guide = guide_coloursteps(even.steps = FALSE, 
-                                               show.limits = TRUE,
-                                               ticks.linewidth = 2,
-                                               barheight = unit(3, "in")))
-
+    direction = -1,
+    type = "viridis",
+    breaks = c(1000, 2000, 3000, 5000, 10000, 50000, 100000),
+    guide = guide_coloursteps(even.steps = FALSE, 
+                              show.limits = TRUE,
+                              ticks.linewidth = 2,
+                              barheight = unit(3, "in")))
