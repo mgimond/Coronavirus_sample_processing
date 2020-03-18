@@ -1,6 +1,6 @@
 ------------------------------------------------------------------------
 
-> Note that the plots were last updated on March 17, 2020. They may be
+> Note that the plots were last updated on March 18, 2020. They may be
 > outdated by the time you read this.
 
 Data prep
@@ -15,7 +15,7 @@ library(ggplot2)
 library(countrycode) # Adds continent data
 
 # Pull data from Johns Hopkins Github site
-conf <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv")
+conf  <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv")
 death <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv")
 recov <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv")
 
@@ -60,7 +60,7 @@ dat %>% filter(Date == max(Date),
         panel.grid.minor = element_blank()) +
   scale_color_brewer(type = "qual") +
   scale_x_continuous(breaks = c(1, 10, 100, 1000, 10000, 50000)) +
-  coord_trans( x =  "log") +
+  coord_trans( x = "log") +
   xlab("count") +
   ylab(NULL)+
   geom_vline(xintercept = 1000, col = "grey")
