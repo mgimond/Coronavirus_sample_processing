@@ -65,12 +65,14 @@ dat$iso <- countrycode(dat$country, 'country.name', 'iso3c')
 ```{r fig.height = 6, fig.width = 11}
 # Dot plot faceted by continent (limit to three continents for sake of fig size)
 # (also: bumping count by small amount to apply log transformation)
-dat %>% filter(Date == max(Date),
+dat1 <- dat %>% filter(Date == max(Date),
                !continent %in% c("Africa", "Oceania")) %>% 
   group_by(country, label) %>% 
   summarize(count = sum(Counts), continent = max(continent)) %>% 
-  na.omit() %>% 
-  ggplot() + aes(y = reorder(country, count, max), x = count + 0.01, col = label) + geom_point()+ 
+  na.omit()
+
+ggplot(dat1, aes(y = reorder(country, count, max), x = count + 0.01, col = label)) + 
+  geom_point() + 
   facet_wrap(~ reorder(continent, -count, median), scales = "free_y", ncol = 3) +
   theme(axis.text.y = element_text(size = 8),
         axis.text.x = element_text(angle = 45,  hjust = 1),
