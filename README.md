@@ -1,6 +1,6 @@
 ------------------------------------------------------------------------
 
-> Note that the plots were last updated on March 19, 2020. They may be
+> Note that the plots were last updated on March 20, 2020. They may be
 > outdated by the time you read this.
 
 Data prep
@@ -55,20 +55,22 @@ dat1 <- dat %>% filter(Date == max(Date),
   na.omit()
 
 ggplot(dat1, aes(y = reorder(country, count, max), x = count + 0.01, col = label)) + 
-  geom_point() + 
+  geom_point(cex = 2, alpha = 0.7) + 
   facet_wrap(~ reorder(continent, -count, median), scales = "free_y", ncol = 3) +
   theme(axis.text.y = element_text(size = 8),
         axis.text.x = element_text(angle = 45,  hjust = 1),
         panel.grid.minor = element_blank()) +
-  scale_color_brewer(type = "qual") +
-  scale_x_continuous(breaks = c(1, 10, 100, 1000, 10000, 50000)) +
+  scale_color_manual(values = c("confirmed" = "orange", 
+                                "recovered" = "green",
+                                "death" = "red")) +
+  scale_x_continuous(breaks = c(0, 1, 10, 100, 1000, 10000, 50000)) +
   coord_trans( x = "log") +
   xlab("count") +
   ylab(NULL)+
   geom_vline(xintercept = 1000, col = "grey")
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-3-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-10-1.png)
 
 Choropleth map of counts
 ------------------------
@@ -102,7 +104,7 @@ ggplot(world2) + geom_sf(aes(fill = cnt)) +
     facet_wrap(~ label, ncol = 1)
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-4-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-11-1.png)
 
 Choropleth map of recovery rates
 --------------------------------
@@ -127,4 +129,4 @@ ggplot(world3) + geom_sf(aes(fill = rate)) +
                               barheight = unit(2.5, "in"))) 
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-5-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-12-1.png)
