@@ -100,8 +100,8 @@ ggplot(world2) + geom_sf(aes(fill = cnt)) +
 
 ![](README_files/figure-markdown_github/unnamed-chunk-4-1.png)
 
-Choropleth map of death rates
------------------------------
+Choropleth map of death/confirmed ratio
+---------------------------------------
 
 ``` r
 dat3 <- dat2 %>% 

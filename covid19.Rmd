@@ -114,7 +114,7 @@ ggplot(world2) + geom_sf(aes(fill = cnt)) +
     facet_wrap(~ label, ncol = 1)
 ```
 
-## Choropleth map of death rates
+## Choropleth map of death/confirmed  ratio
 
 ```{r fig.width = 8, fig.height = 5}
 dat3 <- dat2 %>% 
