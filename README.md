@@ -1,6 +1,6 @@
 ------------------------------------------------------------------------
 
-> Note that the plots were last updated on April 01, 2020. They may be
+> Note that the plots were last updated on April 14, 2020. They may be
 > outdated by the time you read this.
 
 Data prep
